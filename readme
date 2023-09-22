@@ -1,0 +1,9 @@
+rax standard return register
+rdi first parameter
+rsi second parameter
+
+cmp buys two values if true calls je if false calls jne
+je receives a function as parameter (if)
+jne takes a function as a parameter (else)
+jg greater (>)
+jl smaller (<)
