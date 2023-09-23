@@ -10,8 +10,10 @@
 */
 #define STRLEN(x) printf("`%s` = %d (%d)\n", x, ft_strlen(x), (int)strlen(x));
 #define STRCMP(a, b) printf("`%s`:`%s` = %d (%d)\n", a, b, ft_strcmp(a, b), strcmp(a, b));
-// # define WRITE(s, x)		printf("^%ld (`%s`:%ld)\n", ft_write(STDOUT_FILENO, s, x), s, x);
-// # define READ(b, x)			r = ft_read(STDIN_FILENO, buffer, x); printf("`%s`:%ld\n", buffer, r);
+#define WRITE(s, x) printf("^%ld (`%s`:%ld)\n", ft_write(STDOUT_FILENO, s, x), s, x);
+#define READ(b, x)             \
+    r = ft_read(1, buffer, x); \
+    printf("`%s`:%ld\n", buffer, r);
 // # define DUP(s)				tmp = ft_strdup(s); printf("`%s` (`%s`)\n", tmp, s); free(tmp); tmp = NULL;
 
 /*
@@ -23,9 +25,9 @@ int ft_strcmp(char const *s1, char const *s2);
 
 char *ft_strcpy(char *dst, char const *src);
 
-// ssize_t	ft_write(int fd, void const *buf, size_t nbyte);
+ssize_t ft_write(int fd, void const *buf, size_t nbyte);
 
-// ssize_t	ft_read(int fd, void *buf, size_t nbyte);
+ssize_t ft_read(int fd, void *buf, size_t nbyte);
 
 char *ft_strdup(char const *s1);
 // int ft_strdup(char const *s1);
@@ -51,29 +53,29 @@ int main(void)
     // STRLEN("1")
     // printf("-done\n");
 
-    // printf("\n--strcmp\n");
-    // STRCMP("", "")
-    // STRCMP("toto", "toto")
-    // STRCMP("", "toto")
-    // STRCMP("toto", "")
-    // STRCMP("toto", "totobar")
+    printf("\n--strcmp\n");
+    STRCMP("", "")
+    STRCMP("toto", "toto")
+    STRCMP("", "toto")
+    STRCMP("toto", "")
+    STRCMP("toto", "totobar")
     // // printf("`%s`:`%s` = %d\n", "TOTO", NULL, strcmp("TOTO", NULL));
     // // printf("`%s`:`%s` = %d\n", NULL, "TOTO", strcmp(NULL, "TOTO"));
     // // printf("`%s`:`%s` = %d\n", NULL, NULL, strcmp(NULL, NULL));
-    // printf("-done\n");
-
-    printf("\n--strcpy\n");
-    printf("`%s` (`toto`)\n", ft_strcpy(buffer, "toto"));
-    printf("`%s` (empty)\n", ft_strcpy(buffer, ""));
-    printf("`%s` (`long message`)\n", ft_strcpy(buffer, "long message"));
-    // printf("`%s` (NULL > not modified)\n", strcpy(buffer, NULL));
     printf("-done\n");
+
+    // printf("\n--strcpy\n");
+    // printf("`%s` (`toto`)\n", ft_strcpy(buffer, "toto"));
+    // printf("`%s` (empty)\n", ft_strcpy(buffer, ""));
+    // printf("`%s` (`long message`)\n", ft_strcpy(buffer, "long message"));
+    // // printf("`%s` (NULL > not modified)\n", strcpy(buffer, NULL));
+    // printf("-done\n");
 
     // printf("\n--write\n");
     // WRITE("toto", 4L)
-    // WRITE("totototo", 4L)
-    // WRITE("totototo", 8L)
-    // WRITE("toto", 2L)
+    // // WRITE("totototo", 4L)
+    // // WRITE("totototo", 8L)
+    // // WRITE("toto", 2L)
     // printf("-done\n");
 
     // printf("\n--read (Makefile)\n");
@@ -85,19 +87,19 @@ int main(void)
     // READ(buffer, 0)
     // printf("-done\n");
 
-    printf("\n--ft_strdup\n");
+    // printf("\n--ft_strdup\n");
+    // // tmp2 = ft_strdup("toto");
     // tmp2 = ft_strdup("toto");
-    tmp2 = ft_strdup("toto");
-    // printf("I: %i\n", ft_strdup("toto"));
-    // tmp2[2] = 0;
-    printf("`%s` (`%s`)\n", tmp2, "toto");
-    // DUP(tmp2)
-    free(tmp2);
-    // DUP("totobar")
-    // DUP("long message")
-    // DUP("")
-    // DUP(NULL)
-    printf("-done\n");
+    // // printf("I: %i\n", ft_strdup("toto"));
+    // // tmp2[2] = 0;
+    // printf("`%s` (`%s`)\n", tmp2, "toto");
+    // // DUP(tmp2)
+    // free(tmp2);
+    // // DUP("totobar")
+    // // DUP("long message")
+    // // DUP("")
+    // // DUP(NULL)
+    // printf("-done\n");
 
     return (0);
 }

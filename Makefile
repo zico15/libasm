@@ -1,7 +1,8 @@
-SRCS		=	ft_strlen.s ft_strcmp.s ft_strcpy.s ft_strdup.s
-#  ft_write.s ft_read.s 
+SRCS		=	ft_strlen.s ft_strcmp.s ft_strcpy.s ft_strdup.s ft_write.s  ft_read.s 
+#  
 OBJS		=	$(SRCS:.s=.o)
-BONUS_SRCS	=	ft_atoi_base_bonus.s ft_list_size_bonus.s ft_list_push_front_bonus.s \
+BONUS_SRCS	=	ft_atoi_base.s
+# ft_list_size_bonus.s ft_list_push_front_bonus.s \
 				ft_list_remove_if_bonus.s ft_list_sort_bonus.s
 BONUS_OBJS	=	$(BONUS_SRCS:.s=.o)
 
@@ -38,5 +39,8 @@ test:			$(NAME)
 				gcc $(FLAGS) -L. -lasm -o $(TEST) main.c
 				./$(TEST) < Makefile
 
+test_bonus:		bonus
+				gcc $(FLAGS) -L. -lasm -o $(TEST_BONUS) main_bonus.c
+				./$(TEST_BONUS)
 
 .PHONY:			clean fclean re test bonus test_bonus

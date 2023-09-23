@@ -18,7 +18,6 @@ ft_malloc:
         mov     rcx, 0
         jmp     loop_copy
 
-
 loop_copy:
     mov     dl, byte[rdi + rcx]
     mov     byte[rax + rcx], dl
@@ -29,6 +28,7 @@ loop_copy:
 
 error:
     xor     rax, rax
+    sub    rcx, 1
     ret
 
 done:

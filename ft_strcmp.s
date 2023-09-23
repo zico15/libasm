@@ -3,39 +3,32 @@ global	_ft_strcmp
 
 _ft_strcmp:
 			xor     rax, rax
+            mov     r9, 0
 			jmp		loop
+
 loop:
-            mov     dl, [rdi + rax]     ; s1
-            cmp     dl, [rsi + rax]
+            movzx     rax, byte[rdi + r9]     ; s1
+            movzx     rcx, byte[rsi + r9]     ; s2
+            cmp     rax, rcx                  ; s1 == s2
+            jne      done                     ; else return rax
+            cmp     rax, 0                    ; s1 == 0
             je      done
-            ;cmp     al, 0
-            ;je      done
-            inc     rax
+            cmp     rcx, 0                    ; s2 == 0
+            je      done
+            inc     r9
             jmp     loop
 
-compare:
-            mov     al, [rdi]           ; s1
-            mov     dl, [rsi]          ; s2
-            cmp     al, dl
-            je      loop
-            ;cmp		rdi, rcx	;  BYTE[rax] == 0
-            ;je      loop			; if equal,
-            ;mov     rax , 
-            ret                ; return rax
-
 done:
-            mov rcx, [rsi + rax]
-            mov rax, [rdi + rax]
             sub rax, rcx
             cmp rax, 0
-            jg maior
-            jl menor
+            jg more
+            jl less
             ret
 
-maior:
-            mov rax, -1
-            ret
-
-menor:
+more:
             mov rax, 1
+            ret
+
+less:
+            mov rax, -1
             ret
