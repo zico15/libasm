@@ -1,8 +1,6 @@
 section .text
 global _ft_atoi_base
 
-extern _ft_write
-
 _ft_atoi_base:
     mov r8, 0                  ; number
     mov r9, -1                 ; size_base
@@ -79,7 +77,6 @@ loop_get_pos:
         je break                ; al == dl
     inc r11                     ; rax++
     jmp loop_get_pos
-
 
 loop_get_number:
     mov dl, byte[rdi + r10]     ; rdi = string

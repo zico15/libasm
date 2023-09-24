@@ -21,31 +21,32 @@ typedef struct s_list
 // /*
 // ** print a list elements one by line
 // */
-// void printf_list(t_list *list)
-// {
-//     while (list)
-//     {
-//         printf("; %s\n", list->data);
-//         list = list->next;
-//     }
-// }
+void printf_list(t_list *list)
+{
+    int i = 1;
+    while (list)
+    {
+        printf("list_%i: %s\n", i++, (char *)list->data);
+        list = list->next;
+    }
+}
 
 // /*
 // ** free a whole list and it's data field
 // */
-// void ft_lstclear(t_list **list)
-// {
-//     t_list *tmp;
+void ft_lstclear(t_list **list)
+{
+    t_list *tmp;
 
-//     while (*list)
-//     {
-//         tmp = (*list)->next;
-//         if ((*list)->data)
-//             free((*list)->data);
-//         free(*list);
-//         *list = tmp;
-//     }
-// }
+    while (*list)
+    {
+        tmp = (*list)->next;
+        if ((*list)->data)
+            free((*list)->data);
+        free(*list);
+        *list = tmp;
+    }
+}
 
 /*
 ** Function prototypes
@@ -59,49 +60,67 @@ int ft_list_size(t_list *begin_list);
 void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(),
                        void (*free_fct)(void *));
 
-void ft_list_sort(t_list **begin_list, int (*cmp)());
+int ft_list_sort(t_list **begin_list, int (*cmp)());
 
+int test(const char *rdi, const char *rsi)
+{
+    return (strcmp(rdi, rsi));
+}
 /*
 ** Start !
 */
 int main(void)
 {
-    int i = 0;
-    printf("\n--ft_atoi_base\n");
-    ATOI_BASE("42", "0123456789")
-    ATOI_BASE("0", "0123456789")
-    ATOI_BASE("1", "0123456789")
-    ATOI_BASE("1215415478", "0123456789")
-    ATOI_BASE("-0", "0123456789")
-    ATOI_BASE("-1", "0123456789")
-    ATOI_BASE("-42", "0123456789")
-    ATOI_BASE("--42", "0123456789")
-    ATOI_BASE("-+-42", "0123456789")
-    ATOI_BASE("-256", "0123456789")
-    ft_atoi_base("  \t\n\r\v\f -+-+-+42", "0123456789");
-    ATOI_BASE("-+-+-+-42", "0123456789")
-    ATOI_BASE("-1215415478", "0123456789")
-    ATOI_BASE("2147483647", "0123456789")
-    ATOI_BASE("2147483648", "0123456789")
-    ATOI_BASE("-2147483648", "0123456789")
-    ATOI_BASE("-2147483649", "0123456789")
-    ATOI_BASE("2a", "0123456789abcdef")
-    ATOI_BASE("ff", "0123456789abcdef")
-    ATOI_BASE("poney", "poney")
-    ATOI_BASE("dommage", "invalid")
-    ATOI_BASE("dommage", "aussi invalide")
-    ATOI_BASE("dommage", "+toujours")
-    ATOI_BASE("dommage", "-stop")
-    ATOI_BASE("dommage", "  \t\nca suffit")
-    ATOI_BASE("    +42", "0123456789")
-    ATOI_BASE("    -42", "0123456789")
-    ATOI_BASE("    42", "0123456789")
-    ATOI_BASE("  \t\n\r\v\f  42", "0123456789")
-    ATOI_BASE("  \t\n\r\v\f  -42", "0123456789")
-    ATOI_BASE("42FINIS !", "0123456789")
-    ATOI_BASE("-42FINIS !", "0123456789")
-    ATOI_BASE("C'est dommage42", "0123456789")
-    printf("-done\n");
+    t_list *list = NULL;
+    printf("========\n");
+    ft_list_push_front(&list, strdup("toto4"));
+    ft_list_push_front(&list, strdup("toto6"));
+    ft_list_push_front(&list, strdup("toto3"));
+    // ft_list_push_front(&list, NULL);
+    printf_list(list);
+    printf("size: %d\n", ft_list_size(list));
+    // ft_list_sort(&list, test);
+    printf("sort list: %i\n", ft_list_sort(&list, test));
+
+    printf("========\n");
+    printf_list(list);
+
+    // int i = 0;
+    // printf("\n--ft_atoi_base\n");
+    // ATOI_BASE("42", "0123456789")
+    // ATOI_BASE("0", "0123456789")
+    // ATOI_BASE("1", "0123456789")
+    // ATOI_BASE("1215415478", "0123456789")
+    // ATOI_BASE("-0", "0123456789")
+    // ATOI_BASE("-1", "0123456789")
+    // ATOI_BASE("-42", "0123456789")
+    // ATOI_BASE("--42", "0123456789")
+    // ATOI_BASE("-+-42", "0123456789")
+    // ATOI_BASE("-256", "0123456789")
+    // ft_atoi_base("  \t\n\r\v\f -+-+-+42", "0123456789");
+    // ATOI_BASE("-+-+-+-42", "0123456789")
+    // ATOI_BASE("-1215415478", "0123456789")
+    // ATOI_BASE("2147483647", "0123456789")
+    // ATOI_BASE("2147483648", "0123456789")
+    // ATOI_BASE("-2147483648", "0123456789")
+    // ATOI_BASE("-2147483649", "0123456789")
+    // ATOI_BASE("2a", "0123456789abcdef")
+    // ATOI_BASE("ff", "0123456789abcdef")
+    // ATOI_BASE("poney", "poney")
+    // ATOI_BASE("dommage", "invalid")
+    // ATOI_BASE("dommage", "aussi invalide")
+    // ATOI_BASE("dommage", "+toujours")
+    // ATOI_BASE("dommage", "-stop")
+    // ATOI_BASE("dommage", "  \t\nca suffit")
+    // ATOI_BASE("    +42", "0123456789")
+    // ATOI_BASE("    -42", "0123456789")
+    // ATOI_BASE("    42", "0123456789")
+    // ATOI_BASE("  \t\n\r\v\f  42", "0123456789")
+    // ATOI_BASE("  \t\n\r\v\f  -42", "0123456789")
+    // ATOI_BASE("42FINIS !", "0123456789")
+    // ATOI_BASE("-42FINIS !", "0123456789")
+    // ATOI_BASE("C'est dommage42", "0123456789")
+    // printf("-done\n");
     // // t_list	list;
     // // t_list	list_next;
     // // t_list	list_last;
@@ -176,7 +195,7 @@ int main(void)
     // // ft_list_push_front(&push_test, strdup("zzz"));
     // // printf("before:\n");
     // // printf_list(push_test);
-    // // ft_list_sort(&push_test, &strcmp);
+
     // // printf("after:\n");
     // // printf_list(push_test);
     // // ft_lstclear(&push_test);
