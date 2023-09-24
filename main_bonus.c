@@ -57,13 +57,14 @@ void ft_list_push_front(t_list **begin_list, void *data);
 
 int ft_list_size(t_list *begin_list);
 
-void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(),
-                       void (*free_fct)(void *));
+int ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(),
+                      void (*free_fct)(void *));
 
 int ft_list_sort(t_list **begin_list, int (*cmp)());
 
 int test(const char *rdi, const char *rsi)
 {
+    // printf("test: `%s`:`%s` = %d\n", rdi, rsi, strcmp(rdi, rsi));
     return (strcmp(rdi, rsi));
 }
 /*
@@ -74,15 +75,18 @@ int main(void)
     t_list *list = NULL;
     printf("========\n");
     ft_list_push_front(&list, strdup("toto4"));
-    ft_list_push_front(&list, strdup("toto6"));
-    ft_list_push_front(&list, strdup("toto3"));
+    ft_list_push_front(&list, strdup("toto"));
+    ft_list_push_front(&list, strdup("toto"));
+    ft_list_push_front(&list, strdup("toto5"));
     // ft_list_push_front(&list, NULL);
     printf_list(list);
-    printf("size: %d\n", ft_list_size(list));
-    // ft_list_sort(&list, test);
-    printf("sort list: %i\n", ft_list_sort(&list, test));
-
+    // printf("size: %d\n", ft_list_size(list));
+    //  ft_list_sort(&list, test);
+    // printf("sort list: %i\n", ft_list_sort(&list, test));
     printf("========\n");
+    printf_list(list);
+    printf("========\n");
+    printf("T: %i\n", ft_list_remove_if(&list, "toto", test, free));
     printf_list(list);
 
     // int i = 0;

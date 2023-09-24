@@ -1,8 +1,8 @@
 SRCS		=	ft_strlen.s ft_strcmp.s ft_strcpy.s ft_strdup.s ft_write.s  ft_read.s 
 #  
 OBJS		=	$(SRCS:.s=.o)
-BONUS_SRCS	=	ft_atoi_base.s ft_list_push_front.s ft_list_size.s ft_list_sort.s
-# 			ft_list_remove_if_bonus.s ft_list_sort_bonus.s
+BONUS_SRCS	=	ft_atoi_base.s ft_list_push_front.s ft_list_size.s ft_list_sort.s ft_list_remove_if.s
+
 BONUS_OBJS	=	$(BONUS_SRCS:.s=.o)
 
 NA			=	nasm
@@ -34,11 +34,11 @@ re:				fclean $(NAME)
 bonus:			$(OBJS) $(BONUS_OBJS)
 				ar rcs $(NAME) $(OBJS) $(BONUS_OBJS)
 
-test:			$(NAME)
+t:			$(NAME)
 				gcc $(FLAGS) -L. -lasm -o $(TEST) main.c
 				./$(TEST) < Makefile
 
-test_bonus:		bonus
+tb:		bonus
 				gcc $(FLAGS) -L. -lasm -o $(TEST_BONUS) main_bonus.c
 				./$(TEST_BONUS)
 
