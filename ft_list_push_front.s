@@ -1,18 +1,22 @@
 section .text
-global _ft_list_push_front
-extern	_malloc
+global ft_list_push_front
+extern	malloc
 
 ;void ft_list_push_front(t_list **begin_list, void *data);
-_ft_list_push_front:
+ft_list_push_front:
+    cmp rdi, 0
+    je error
+    cmp rsi, 0
+    je error
     mov rax, 16             ; sizeof(t_list)
-    call malloc
+    call ft_malloc
     ret
 
-malloc:
+ft_malloc:
     push	rdi				; save begin
     push	rsi				; save data
     mov		rdi, rax
-    call	_malloc			; malloc(sizeof(t_list)
+    call	malloc			; malloc(sizeof(t_list))
     pop		rsi
     pop		rdi
     test	rax, rax

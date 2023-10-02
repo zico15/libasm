@@ -1,7 +1,11 @@
 section	.text
-global	_ft_write
+global	ft_write
 
-_ft_write:
-            mov		rax, 0x2000004    ; write syscall param: rdi, rsi, rdx
-			syscall                   ; call kernel return in rax
-			ret
+ft_write:
+		mov rax, 1             ; syscall number for sys_write (1)
+		mov rdi, rdi           ; file descriptor (passed in rdi)
+		mov rsi, rsi           ; pointer to buffer (passed in rsi)
+		mov rdx, rdx           ; buffer size (passed in rdx)
+		syscall                ; invoke the syscall
+		mov rax, rdx
+		ret

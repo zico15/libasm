@@ -1,25 +1,22 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: edos-san <edos-san@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/02 10:34:27 by edos-san          #+#    #+#             */
+/*   Updated: 2023/10/02 13:10:55 by edos-san         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <stdio.h>
+#include <fcntl.h>
 
-/*
-** Useful macros
-*/
-#define STRLEN(x) printf("`%s` = %d (%d)\n", x, ft_strlen(x), (int)strlen(x));
-#define STRCMP(a, b) printf("`%s`:`%s` = %d (%d)\n", a, b, ft_strcmp(a, b), strcmp(a, b));
-#define WRITE(s, x) printf("^%ld (`%s`:%ld)\n", ft_write(STDOUT_FILENO, s, x), s, x);
-#define READ(b, x)             \
-    r = ft_read(1, buffer, x); \
-    printf("`%s`:%ld\n", buffer, r);
-// # define DUP(s)				tmp = ft_strdup(s); printf("`%s` (`%s`)\n", tmp, s); free(tmp); tmp = NULL;
-
-/*
-** Function prototypes
-*/
-int ft_strlen(char const *str);
+size_t ft_strlen(char const *str);
 
 int ft_strcmp(char const *s1, char const *s2);
 
@@ -30,76 +27,86 @@ ssize_t ft_write(int fd, void const *buf, size_t nbyte);
 ssize_t ft_read(int fd, void *buf, size_t nbyte);
 
 char *ft_strdup(char const *s1);
-// int ft_strdup(char const *s1);
+
+void test_strlen(char const *str)
+{
+    printf("===============================================\n");
+    printf("ft_strlen: %li\nstrlen: %li\n", ft_strlen(str), strlen(str));
+}
+
+
+void test_strcmp(char const *s1, char const *s2)
+{
+    printf("===============================================\n");
+    printf("ft_strcmp: %i\nstrcmp: %i\n", ft_strcmp(s1, s2), strcmp(s1, s2));
+}
+
+void test_strcpy(char const *src)
+{
+    //ft_strcpy
+    char *dst = calloc(ft_strlen(src) + 1, 1);
+    char *tmp1 = ft_strcpy(dst, src);
+    //strcpy
+    dst = calloc(ft_strlen(src) + 1, 1);
+    char *tmp2 = strcpy(dst, src);
+    printf("===============================================\n");
+    printf("ft_strcpy: %s\nstrcpy: %s\n", tmp1, tmp2);
+    free(tmp1);
+    free(tmp2);
+}
+
+void test_write(int fd, char const *s1)
+{
+    printf("===============================================\n");
+    ft_write(fd, "ft_write: ", 10);
+    printf("len: %li\n", ft_write(fd, s1, ft_strlen(s1)));
+    write(fd, "write: ", 8);
+    printf("len: %li\n", write(fd, s1, ft_strlen(s1)));
+}   
+
+void test_read(int fd)
+{
+    char buffer[5000]; 
+    buffer[ft_read(fd, buffer, sizeof(buffer) - 1)] = 0;
+
+    printf("===============================================\n");
+    printf("ft_read: %s\n",  buffer);
+    buffer[read(fd, buffer, sizeof(buffer) - 1)] = 0;
+    printf("read: %s\n",  buffer);
+}
+
+void test_strdup(char const *s1)
+{
+    printf("===============================================\n");
+    char *tmp = ft_strdup(s1);
+    printf("ft_strdup: %s\n",tmp);
+    free(tmp);
+    tmp = ft_strdup(s1);
+    printf("strdup: %s\n",tmp);
+    free(tmp);
+}
+
+
 
 /*
 ** Start !
 */
 int main(void)
 {
-    int i;
-    long r;
-    static char buffer[100];
-    char *tmp;
-    char *tmp2;
+    
+    char *s1 = "Hello word!\n";
+    char *s2 = "Hello word!\n";
+    int fd = open("file.text", O_RDONLY);
 
-    r = 0;
-    // printf("--strlen\n");
-    // STRLEN("")
-    // STRLEN("toto")
-    // STRLEN("totototo")
-    // STRLEN("0123456789abcdef")
-    // STRLEN("42")
-    // STRLEN("1")
-    // printf("-done\n");
+    printf("fd: %i\n", fd);
+    test_strlen(s1);
+    test_strcmp(s1, s2);
+    test_strcpy(s1);
+    test_write(1, s1);
+    test_read(fd);
+    test_strdup(s1);
 
-    printf("\n--strcmp\n");
-    STRCMP("", "")
-    STRCMP("toto", "toto")
-    STRCMP("", "toto")
-    STRCMP("toto", "")
-    STRCMP("toto", "totobar")
-    // // printf("`%s`:`%s` = %d\n", "TOTO", NULL, strcmp("TOTO", NULL));
-    // // printf("`%s`:`%s` = %d\n", NULL, "TOTO", strcmp(NULL, "TOTO"));
-    // // printf("`%s`:`%s` = %d\n", NULL, NULL, strcmp(NULL, NULL));
-    printf("-done\n");
-
-    // printf("\n--strcpy\n");
-    // printf("`%s` (`toto`)\n", ft_strcpy(buffer, "toto"));
-    // printf("`%s` (empty)\n", ft_strcpy(buffer, ""));
-    // printf("`%s` (`long message`)\n", ft_strcpy(buffer, "long message"));
-    // // printf("`%s` (NULL > not modified)\n", strcpy(buffer, NULL));
-    // printf("-done\n");
-
-    // printf("\n--write\n");
-    // WRITE("toto", 4L)
-    // // WRITE("totototo", 4L)
-    // // WRITE("totototo", 8L)
-    // // WRITE("toto", 2L)
-    // printf("-done\n");
-
-    // printf("\n--read (Makefile)\n");
-    // READ(buffer, 50)
-    // READ(buffer, 25)
-    // READ(buffer, 4)
-    // READ(buffer, 26)
-    // READ(buffer, 14)
-    // READ(buffer, 0)
-    // printf("-done\n");
-
-    // printf("\n--ft_strdup\n");
-    // // tmp2 = ft_strdup("toto");
-    // tmp2 = ft_strdup("toto");
-    // // printf("I: %i\n", ft_strdup("toto"));
-    // // tmp2[2] = 0;
-    // printf("`%s` (`%s`)\n", tmp2, "toto");
-    // // DUP(tmp2)
-    // free(tmp2);
-    // // DUP("totobar")
-    // // DUP("long message")
-    // // DUP("")
-    // // DUP(NULL)
-    // printf("-done\n");
-
+    if (fd > 2)
+     close(fd);
     return (0);
 }

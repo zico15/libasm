@@ -1,10 +1,10 @@
 section .text
-global _ft_list_remove_if
-extern _free
+global ft_list_remove_if
+extern free
 
 ;int ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(),
 ;      void (*free_fct)(void *));
-_ft_list_remove_if:
+ft_list_remove_if:
     mov r10, rdi            ; r10 = begin_list
     mov r11, rsi            ; r11 = data_ref
     mov r12, rdx            ; r12 = cmp
@@ -22,7 +22,7 @@ loop:
     mov rsi, r11            ; rsi = data_ref
     call r12                ; cmp(begin_list->data, data_ref)
     cmp rax, 0              ; if (cmp(begin_list->data, data_ref) == 0)
-    je free                 ; free(begin_list)
+    je ft_free              ; free(begin_list)
     mov r15, r14            ; r15 = begin_list
     mov r14, [r14 + 8]      ; r14 = begin_list->next
     jmp loop                ; loop
@@ -36,7 +36,7 @@ free_item:
     call r13                ; free_fct(begin_list)
     mov rdi, r14            ; rdi = begin_list
     mov r14,  [r14 + 8]     ; r14 = begin_list->next
-    call _free              ; free(begin_list)
+    call free              ; free(begin_list)
     ret                     ; return  
 
 set_head:
@@ -45,7 +45,7 @@ set_head:
     call free_item          ; free_item(begin_list)
     jmp loop                ; loop
 
-free:
+ft_free:
     cmp r15, 0              ; if (free_fct == NULL)
     je set_head             ; set_head(begin_list)
     mov rbx, [r14 + 8]      ; rax = begin_list->next

@@ -1,8 +1,8 @@
 section .text
-global _ft_list_size
+global ft_list_size
 
 ;int ft_list_size(t_list *begin_list);
-_ft_list_size:
+ft_list_size:
     mov rax, -1
 
 loop:

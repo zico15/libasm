@@ -1,7 +1,11 @@
 section .text
-global _ft_atoi_base
+global ft_atoi_base
 
-_ft_atoi_base:
+ft_atoi_base:
+    cmp rdi, 0
+    je error
+    cmp rsi, 0
+    je error
     mov r8, 0                  ; number
     mov r9, -1                 ; size_base
     mov r15, 1                 ; signo  

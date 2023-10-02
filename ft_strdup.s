@@ -1,17 +1,17 @@
 section	.text
-global	_ft_strdup
+global	ft_strdup
 
-extern _ft_strlen, _malloc
+extern ft_strlen, malloc
 
-_ft_strdup:
-    call _ft_strlen
+ft_strdup:
+    call ft_strlen
     inc rax
     jmp ft_malloc
 
 ft_malloc:
         push	rdi						; save src
         mov		rdi, rax
-        call	_malloc					; rax = _malloc(length)
+        call	malloc					; rax = malloc(length)
         pop		rdi						; restore src
         cmp		rax, 0
         jz		error
